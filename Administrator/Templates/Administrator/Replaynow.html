@@ -1,0 +1,114 @@
+{% extends 'Administrator/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replay</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+        }
+    
+        table td {
+            padding: 12px;
+            font-size: 16px;
+        }
+    
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    
+        table tr:hover {
+            background-color: #ddd;
+        }
+    
+        h3 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            margin-bottom: 10px;
+        }
+    
+        a {
+            display: block;
+            text-align: center;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+    
+        a:hover {
+            text-decoration: underline;
+        }
+    
+        textarea {
+            width: 95%;
+            height: 100px;
+            resize: vertical;
+            padding: 8px;
+            font-size: 14px;
+        }
+    
+        input[type="submit"] {
+            padding: 8px 16px;
+            margin: 5px;
+            font-size: 15px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="POST">
+        {%csrf_token%}
+        <h3 align="center">Replay</h3>
+        <!-- <a href="{% url 'Admin:homepage' %}">Home Page</a><br> -->
+        <table border="1" align="center">
+    <td>Subject</td>
+    <td>{{comp.Complaint_subject}}</td>
+</tr>
+<tr>
+    <td>Complaint</td>
+    <td>{{comp.Complaint_complaint}}</td>
+</tr>
+<tr>
+    <td>Date</td>
+    <td>{{comp.Complaint_date}}</td>
+</tr>
+
+<tr>
+    <td>User Name</td>
+    <td>{{comp.user.user_name}}</td>
+</tr>
+    <td>Replay</td>
+    <td>
+        <textarea name="txt_replay" id=""></textarea>
+    </td>
+</tr>
+    <tr>
+        <td colspan="2" align="center">
+            <input type="submit" value="Submit">
+            <input type="submit" value="Cancel"></td>
+    </tr>
+</tr>
+</table>
+</form>
+</body>
+</html>
+
+{% endblock %}

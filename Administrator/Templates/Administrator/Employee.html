@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee</title>
+</head>
+<body>
+    <h1 align="center">Employee</h1>
+    <form action="" method="post">
+        <a href="{% url 'Admin:homepage' %}">Home Page</a><br>
+        {% csrf_token %}
+        <table align="center" border="1">
+            <tr>
+                <td>
+                    Department
+                </td>
+                <td>
+                    <select name="sel_department" id="department">
+                        <option value="">Select Department</option>
+                        {% for i in department %}
+                        <option 
+                        {% if editemp.department_id == i.id %}        
+                        selected
+                        {% endif %}
+                        value="{{ i.id }}">{{i.department_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Designation
+                </td>
+                <td>
+                    <select name="sel_designation" id="designation">
+                        <option value="">Select Designation</option>
+                        {% for i in designation %}
+                        <option 
+                        {% if editemp.designation_id == i.id %}        
+                        selected
+                        {% endif %}
+                        value="{{ i.id }}">{{i.designation_name}}</option>
+                        {% endfor %}
+                    </select>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    <input type="text" name="txt_ename" id="" value="{{editemp.emp_name }}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Contact
+                </td>
+                <td>
+                    <input type="number" name="txt_contact" id="" value="{{editemp.emp_contact }}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Email
+                </td>
+                <td>
+                    <input type="email" name="txt_mail" id="" value="{{editemp.emp_email }}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Address
+                </td>
+                <td>
+                    <textarea name="txt_add" id="">{{ editemp.emp_address }}</textarea>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    Basic Salary
+                </td>
+                <td>
+                    <input type="number" name="txt_bs" id="" value="{{editemp.emp_bs }}">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"  align="center">
+                    <input type="submit" value="Submit" name="btn_submit">
+                    <input type="submit" value="Cancel" name="btn_cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <br>
+    <br>
+    <br>
+    <table border="1" align="center">
+        <tr>
+            <th>#</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Basic Salary</th>
+            <th>Actions</th>
+        </tr>
+        {% for i in employee %}
+        <tr>
+            <td>
+                {{forloop.counter}}
+            </td>
+            <td>{{ i.department_name.department_name }}</td>
+            <td>{{ i.designation_name.designation_name }}</td>
+            <td>{{ i.emp_name }}</td>
+            <td>{{ i.emp_contact }}</td>
+            <td>{{ i.emp_email }}</td>
+            <td>{{ i.emp_address }}</td>
+            <td>{{ i.emp_bs }}</td>
+                 <td>
+                <a href="{% url 'Admin:deleteemployee' i.id %}">Delete</a>
+
+                <a href="{% url 'Admin:editemployee' i.id %}">Edit</a>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends 'Pharmacy/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View cart Product </title>
+</head>
+<body>
+    <form action="" method="POST">
+        {%csrf_token%}
+        <h3 align="center">View cart Product </h3>
+        <a href="{% url 'Pharmacy:pharmacyhomepage' %}">Home Page</a><br>
+        <table border="1" align="center">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Photo </th>
+                <th>Deatails </th>
+                <!-- <th>Rate </th> -->
+                </tr>
+                {% for i in cart %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ i.medicine_id.medicine_name }}</td>
+                    <td><img src="{{i.medicine_id.medicine_photo.url}}" alt="{{i.medicine_photo.url}}" width="50" height="50"></td>
+                    <td>{{ i.medicine_id.medicine_description }}</td>
+                    <!-- <td>{{i.medicine_id.medicine_rate}}</td> -->
+                   
+                </tr>
+                {%endfor%}
+            </table>
+
+</body>
+</html>
+
+{% endblock %}

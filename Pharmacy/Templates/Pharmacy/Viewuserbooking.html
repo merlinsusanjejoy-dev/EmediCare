@@ -1,0 +1,179 @@
+{% extends 'Pharmacy/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Product Booking</title>
+    <style>
+        .table-container {
+            width: 80%;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .scrollable-table {
+            max-height: 300px; /* Adjust height as needed */
+            overflow-y: auto;
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th {
+            background-color: #64bc4c;
+            color: white;
+            padding: 10px;
+            border: 1px solid black;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        
+        span {
+            font-weight: bold;
+        }
+
+        h3 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <!-- Bookings with Prescription -->
+        <div class="table-container">
+            <h3>Bookings with Prescription</h3>
+            <div class="scrollable-table">
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Prescription</th>
+                        <th>Product price </th>
+                        <th>Product Details</th>
+                        <th>Prescription Verification</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        <th>Chat</th>
+                    </tr>
+                    {% for i in Booking %}
+                        {% if i.booking_prescription != "" %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.user.user_name }}</td>
+                            <td>{{ i.user.user_address }}</td>
+                            <td>
+                                <a href="{{ i.booking_prescription.url }}">
+                                    <img src="{{ i.booking_prescription.url }}" width="100" alt="Prescription">
+                                </a>
+                            </td>
+
+                            <td>{{ i.booking_amount }}</td>
+
+                            <td><a href="{% url 'Pharmacy:viewusercart' i.id %}">View More</a></td>
+                            <td><a href="{% url 'Pharmacy:verified' i.id %}">Verified</a></td>
+                            <td>
+                                {% if i.booking_status == 2 %}
+                                <span style="color: orange;">Pending</span>
+                                {% elif i.booking_status == 3 %}
+                                <span style="color: blue;">Packed</span>
+                                {% elif i.booking_status == 4 %}
+                                <span style="color: purple;">Collected</span>
+                                {% elif i.booking_status == 5 %}
+                                <span style="color: #64bc4c;">Delivered</span>
+                                {% elif i.booking_status == 7 %}
+                                <span style="color: red;">Verified</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if i.booking_status == 2 %}
+                                <a href="{% url 'Pharmacy:packorder' i.id %}">Pack Order</a>
+                                {% endif %}
+                            </td>
+                            <td><a href="{% url 'Pharmacy:chat' i.user.id %}">Chat</a></td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <!-- Bookings without Prescription -->
+        <div class="table-container">
+            <h3>Bookings without Prescription</h3>
+            <div class="scrollable-table">
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Product price </th>
+                        <th>Product Details</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        <th>Chat</th>
+                    </tr>
+                    {% for i in Booking %}
+                        {% if i.booking_prescription == "" %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.user.user_name }}</td>
+                            <td>{{ i.user.user_address }}</td>
+                            <td>{{ i.booking_amount }}</td>
+                            
+                            <td><a href="{% url 'Pharmacy:viewusercart' i.id %}">View More</a></td>
+                            <td>
+                                {% if i.booking_status == 2 %}
+                                <span style="color: orange;">Pending</span>
+                                {% elif i.booking_status == 3 %}
+                                <span style="color: blue;">Packed</span>
+                                {% elif i.booking_status == 4 %}
+                                <span style="color: purple;">Collected</span>
+                                {% elif i.booking_status == 5 %}
+                                <span style="color: #64bc4c;">Delivered</span>
+                                {% elif i.booking_status == 7 %}
+                                <span style="color: red;">Verified</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if i.booking_status == 2 %}
+                                <a href="{% url 'Pharmacy:packorder' i.id %}">Pack Order</a>
+                                {% endif %}
+                            </td>
+                            <td><a href="{% url 'Pharmacy:chat' i.user.id %}">Chat</a></td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </form>
+</body>
+
+</html>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'Administrator/Header.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <style>
+        /* Table Styling */
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #100a32;
+            color: white;
+        }
+
+        td a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .text-danger {
+            color: red;
+        }
+
+        .text-primary {
+            color: blue;
+        }
+
+        /* Center Form */
+        form {
+            text-align: center;
+        }
+
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="POST">
+        {%csrf_token%}
+        <h3 align="center">view feedback</h3>
+        <!-- <a href="{% url 'Admin:homepage' %}">Home Page</a><br> -->
+        <table border="1" align="center">
+            <tr>
+
+<table border="1" align="center">
+        <tr>
+            <th>#</th>
+            <th>Feedback  </th>
+            <th>Customer name</th>
+           
+        </tr>
+        {% for i in feedback %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.feedback_content}}</td>
+            <td>{{i.user.user_name}}</td>
+            
+        </tr>
+        {%endfor%}
+    </table>
+
+</body>
+</html>
+
+{% endblock %}

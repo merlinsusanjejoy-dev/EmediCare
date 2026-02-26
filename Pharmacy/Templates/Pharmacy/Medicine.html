@@ -1,0 +1,107 @@
+{% extends 'Pharmacy/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Registration</title>
+</head>
+<body>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+
+        <h3 align="center"> Medicine Registration</h3>
+        <!-- <a href="{% url 'Pharmacy:pharmacyhomepage' %}">Home Page</a><br> -->
+        <table border="1" align="center">
+            <tr>
+                <td>Medicine name:</td>
+                <td><input  required type="text" name="txt_medicine" id="" value="{{editmedic.medicine_name}}" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter" ></td>
+            </tr>
+            <tr>
+                <td>Photo</td>
+                <td><input required type="file" src="" alt="" name="medicine_photo"></td>
+            </tr>
+            <tr>
+                <td>
+                    deatails
+                </td>
+                <td>
+                    <textarea required name="txt_deatails" id="" value="">{{editmedic.medicine_description}}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td>
+                    <select name="txtcategory" id="txtcategory" required>
+                        <option value="">Select medicine category</option>
+                        {% for i in category %}
+                        <option
+                        {% if editmedic.category_id == i.id %}
+                        selected
+                        {% endif %}
+                        value="{{ i.id }}">{{i.category_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Rate</td>
+                <td><input required type="text" name="txt_rate" id="" value="{{editmedic.medicine_rate}}"></td>
+            </tr>
+            <tr>
+                <td>Prescription</td>
+                <td>
+                  <input type="radio" name="rdo" value="1">Yes
+                  <input type="radio" name="rdo" value="0">No
+                  
+                </td>
+              </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Submit">
+                    <input type="submit" value="Cancel"></td>
+            </tr>
+           
+        </table>
+    </form>
+    <div style="width: 90%; max-height: 400px; overflow-y: auto; margin: 20px auto; border: 1px solid #ccc;">
+        <table border="1" style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Details</th>
+            <th>Category</th>
+            <th>Rate</th>
+            <th>stock</th>
+            <th>Add stock</th>
+            <th>Action</th>
+        </tr>
+
+            {% for i in medicine %}
+            <tr>
+            <td>{{forloop.counter}} </td>
+            <td>{{i.medicine_name}}</td>
+            <td><img src="{{i.medicine_photo.url}}" alt="No Image" width="50" height="50"></td>
+            <td>{{i.medicine_description}}</td>
+            <td>{{i.category.category_name}}</td>
+            <td>{{i.medicine_rate}}</td>
+            <td>{{i.total_stock}}</td>
+            <td><a href="{% url 'Pharmacy:addstock' i.id %}">Add stock</a></td>
+            <td><a href="{% url 'Pharmacy:deletemedicine' i.id %}">Delete</a>
+                <a href="{% url 'Pharmacy:editmedicine' i.id %}">Edit</a></td>
+           
+        </tr>
+        {%endfor%}
+    </table>
+    </div>
+</body>
+</html>
+</body>
+</html>
+</body>
+</html>
+
+{% endblock %}

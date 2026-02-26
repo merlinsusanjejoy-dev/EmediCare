@@ -1,0 +1,67 @@
+{% extends 'Deliveryboy/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View cart Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #64bc4c;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        img {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h3 align="center">View cart Product</h3>
+    <!-- <a href="{% url 'Deliveryboy:deliveryhomepage' %}">Home Page</a><br> -->
+    <table border="1" align="center">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Photo</th>
+            <th>Details</th>
+            <th>Rate</th>
+        </tr>
+        {% for i in Booking %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.medicine_id.medicine_name }}</td>
+            <td><img src="{{ i.medicine_id.medicine_photo.url }}" alt="{{ i.medicine_photo.url }}" width="50" height="50"></td>
+            <td>{{ i.medicine_id.medicine_description }}</td>
+            <td>{{ i.medicine_id.medicine_rate }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock %}

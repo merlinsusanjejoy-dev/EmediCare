@@ -1,0 +1,111 @@
+{% extends 'Pharmacy/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My profile</title>
+    <head>
+        
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            text-align: center;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background-color: #64bc4c;
+            color: white;  /* White text color for headings */
+        }
+        a {
+            text-decoration: none;
+            color: #64bc4c;
+            margin: 0 5px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        img {
+                border-radius: 50%;
+            }
+            h1 {
+        text-align: center;
+        color: #64bc4c; /* changed from #333 to green */
+    }
+    td[colspan="2"] {
+        text-align: center;
+        background-color: #ffffff; /* light green */
+    }
+    
+    tr:hover {
+    background-color: #c5fab4; /* very light green */
+    transition: background-color 0.3s ease;
+}
+    table, th, td {
+                border: 1px solid #4f4848;
+            }
+    
+            td {
+                padding: 12px 20px;
+                color: #444;
+            }
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f6f8;
+                margin: 0;
+                padding: 20px;
+            }
+    
+    </style>
+    </head>
+</head>
+<body>
+    <h1 align="center">My Profile</h1>
+        <table align="center" border="1">
+            <tr>
+                <td colspan="2"align="center"><img src={{pharmacy.pharmacy_logo.url}} width="100" height="100"></td>
+                
+            </tr>
+            <td>Name</td>
+            <td>{{pharmacy.pharmacy_name}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{pharmacy.pharmacy_email}}</td>
+        </tr>
+        <tr>
+            <td>Contact</td>
+            <td>{{pharmacy.pharmacy_contact}}</td>
+        </tr>
+       
+        <tr>
+            <td>Address</td>
+            <td>{{pharmacy.pharmacy_address}}</td>
+        </tr>
+        <tr>
+            <td>District</td>
+            <td>{{pharmacy.place.district.district_name}}</td>
+            </tr>
+            <td>Place</td>
+            <td>{{pharmacy.place.place_name}}</td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <a href="{% url 'Pharmacy:editprofile' %}">Editprofile</a>
+                    <a href="{% url 'Pharmacy:changepassword' %}">Changepassword</a></td>
+            </tr>
+            </tr>
+        </table>
+    
+</body>
+</html>
+{% endblock %}

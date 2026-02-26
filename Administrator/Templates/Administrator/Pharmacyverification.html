@@ -1,0 +1,162 @@
+{% extends 'Administrator/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy varification</title>
+
+    <style>
+        /* Table Styling */
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #100a32;
+            color: white;
+        }
+
+        td a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .text-danger {
+            color: red;
+        }
+
+        .text-primary {
+            color: blue;
+        }
+
+        /* Center Form */
+        form {
+            text-align: center;
+        }
+
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+
+</head>
+<body>
+    <form action="">
+        {% csrf_token%}
+        <center><h4>New Pharmacy</h4></center>
+        <!-- <a href="{% url 'Admin:homepage' %}">Home Page</a><br> -->
+        <table border="1" align="center" cellpadding="5">
+            <tr>
+                <th>SI.NO</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>District</th>
+                <th>Place</th>
+                <th>Proof</th>
+                <th>Logo</th>
+                <th colspan="2" align="center">Actions</th>
+            </tr>
+            {% for i in pharmacy %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.pharmacy_name}}</td>
+                <td>{{i.pharmacy_email}}</td>
+                <td>{{i.pharmacy_contact}}</td>
+                <td>{{i.pharmacy_address}}</td>
+                <td>{{i.place.district.district_name}}</td>
+                <td>{{i.place.place_name}}</td>
+                <td><img src="{{i.pharmacy_logo.url}}" alt="no image" width="50" height="50"></td>
+                <td><img src="{{i.pharmacy_proof.url}}" alt="no image" width="50" height="50"></td>
+                    <td><a href="{% url 'Admin:accept' i.id %}">Accept</a></td>
+                    <td><a href="{% url 'Admin:reject' i.id %}">Reject</a></td>
+                </td>
+            </tr>
+            {%endfor%}
+        </table>
+
+        <br><br>
+        <center><h4>Verified Pharmacy</h4></center>
+        <table border="1" align="center" cellpadding="5">
+            <tr>
+                <th>SI.NO</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>District</th>
+                <th>Place</th>
+                <th>Logo</th>
+                <th>Proof</th>
+                <th colspan="2" align="center">Actions</th>
+            </tr>
+            {% for i in accept %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.pharmacy_name}}</td>
+                <td>{{i.pharmacy_email}}</td>
+                <td>{{i.pharmacy_contact}}</td>
+                <td>{{i.pharmacy_address}}</td>
+                <td>{{i.place.district.district_name}}</td>
+                <td>{{i.place.place_name}}</td>
+                <td><img src="{{i.pharmacy_logo.url}}" alt="no image" width="50" height="50"></td>
+                <td><img src="{{i.pharmacy_proof.url}}" alt="no image" width="50" height="50"></td>
+                    <td><a href="{% url 'Admin:reject' i.id %}">Reject</a></td>
+                </td>
+            </tr>
+            {%endfor%}
+        </table>
+        <br><br>
+        <center><h4>Rejected Pharmacy</h4></center>
+        <table border="1" align="center" cellpadding="5">
+            <tr>
+                <th>SI.NO</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>District</th>
+                <th>Place</th>
+                <th>Logo</th>
+                <th>Proof</th>
+                <!-- <th>Actions</th> -->
+                
+            </tr>
+            {% for i in reject %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.pharmacy_name}}</td>
+                <td>{{i.pharmacy_email}}</td>
+                <td>{{i.pharmacy_contact}}</td>
+                <td>{{i.pharmacy_address}}</td>
+                <td>{{i.place.district.district_name}}</td>
+                <td>{{i.place.place_name}}</td>
+                <td><img src="{{i.pharmacy_logo.url}}" alt="no image" width="50" height="50"></td>
+                <td><img src="{{i.pharmacy_proof.url}}" alt="no image" width="50" height="50"></td>
+                
+                
+                </td>
+            </tr>
+            {%endfor%}
+        </table>
+    </form>
+</body>
+</html>
+
+{% endblock %}

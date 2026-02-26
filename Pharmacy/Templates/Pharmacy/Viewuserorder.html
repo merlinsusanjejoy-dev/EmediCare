@@ -1,0 +1,103 @@
+{% extends 'Pharmacy/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Product Booking</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        th {
+            background-color: #64bc4c;
+            color: white;
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <h3 align="center">View Product Booking</h3>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <!-- <a href="{% url 'Pharmacy:pharmacyhomepage' %}">Home Page</a> -->
+        </div>
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Address</th>
+                <!-- <th>Prescription</th> -->
+                <th>Product Details</th>
+                <!-- <th>Prescription Verification</th> -->
+                <th>Status</th>
+                <th>Action</th>
+                <th>Chat</th>
+            </tr>
+            {% for i in Booking %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.user.user_name }}</td>
+                <td>{{ i.user.user_address }}</td>
+                <!-- <td>
+                    {% if i.booking_prescription == "" %}
+                    N/A
+                    {% else %}
+                    <a href="{{ i.booking_prescription.url }}"><img src="{{ i.booking_prescription.url }}" width="100" alt="Prescription"></a>
+                    {% endif %}
+                </td> -->
+                <td><a href="{% url 'Pharmacy:viewusercart' i.id %}">View More</a></td>
+                <!-- <td><a href="{% url 'Pharmacy:verified' i.id %}">Verified</a></td> -->
+                <td>
+                    {% if i.booking_status == 2 %}
+                    <span style="color: orange;">Pending</span>
+                    {% elif i.booking_status == 3 %}
+                    <span style="color: blue;">Packed</span>
+                    {% elif i.booking_status == 4 %}
+                    <span style="color: purple;">Collected</span>
+                    {% elif i.booking_status == 5 %}
+                    <span style="color: #64bc4c;">Delivered</span>
+                    {% elif i.booking_status == 7 %}
+                    <span style="color: red;">Verified</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if i.booking_status == 2 %}
+                    <a href="{% url 'Pharmacy:packorder' i.id %}">Pack Order</a>
+                    {% endif %}
+           
+               
+                <td>
+                <a href="{% url 'Pharmacy:chat' i.user.id %}">Chat</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+
+</html>
+{% endblock %}

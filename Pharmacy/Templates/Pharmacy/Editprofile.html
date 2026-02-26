@@ -1,0 +1,118 @@
+{% extends 'Pharmacy/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <head>
+       
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            text-align: center;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background-color: #64bc4c;
+            color: white;  /* White text color for headings */
+        }
+        a {
+            text-decoration: none;
+            color: #64bc4c;
+            margin: 0 5px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        img {
+                border-radius: 50%;
+            }
+            h1 {
+        text-align: center;
+        color: #64bc4c; /* changed from #333 to green */
+    }
+    td[colspan="2"] {
+        text-align: center;
+        background-color: #ffffff; /* light green */
+    }
+    
+    tr:hover {
+    background-color: #c5fab4; /* very light green */
+    transition: background-color 0.3s ease;
+}
+    table, th, td {
+                border: 1px solid #4f4848;
+            }
+    
+            td {
+                padding: 12px 20px;
+                color: #444;
+            }
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f6f8;
+                margin: 0;
+                padding: 20px;
+            }
+    
+    </style>
+    </head>
+</head>
+<body>
+
+        <h1 align="center">Edit Profile </h1>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {%csrf_token%}
+        <table border="1"align="center">
+            <td>
+                Name
+            </td>
+            <td>
+                <input type="text" name="txt_ename" id="" value="{{pharmacy.pharmacy_name}}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Email
+            </td>
+            <td>
+                <input type="email" name="txt_mail" id="" value="{{pharmacy.pharmacy_email}}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Contact
+            </td>
+            <td>
+                <input type="number" name="txt_contact" id="" value="{{pharmacy.pharmacy_contact}}">
+            </td>
+        </tr>
+       
+        <tr>
+            <td>
+                Address
+            </td>
+            <td>
+                <textarea name="txt_add" value="{{pharmacy.pharmacy_address}}">{{pharmacy.pharmacy_address}}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="Update"></td>
+        </tr>
+        </table>
+    </form>
+    
+</body>
+</html>
+{% endblock%}

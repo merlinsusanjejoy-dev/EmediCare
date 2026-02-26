@@ -1,0 +1,161 @@
+{% extends 'Administrator/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Chart</title>
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .containerr {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .cardd {
+            background: #e4e3e3;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px; /* Adjusted for better side-by-side display */
+            transition: transform 0.2s ease;
+        }
+
+        .cardd:hover {
+            transform: translateY(-5px);
+        }
+
+        .cardd h2 {
+            margin-top: 0;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .cardd {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="containerr">
+        <div class="cardd">
+            <h2>Monthly Sales Report</h2>
+            <canvas id="salesChart" width="400" height="200"></canvas>
+        </div>
+
+        <div class="cardd">
+            <h2>Medicines by Category</h2>
+            <canvas id="categoryChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- JS Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- AJAX + Chart Script -->
+    <script>
+        $(document).ready(function () {
+            var dashboardUrl = "{% url 'Admin:ajaxchartreport' %}";
+
+            $.ajax({
+                url: dashboardUrl,
+                success: function (response) {
+                    // Bar Chart (Sales Chart)
+                    var barCtx = document.getElementById('salesChart').getContext('2d');
+                    new Chart(barCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: response.bar_chart.labels,
+                            datasets: [{
+                                label: 'Total Sales',
+                                data: response.bar_chart.data,
+                                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1,
+                                borderRadius: 5
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Sales Amount'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Month'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: { display: false }
+                            }
+                        }
+                    });
+
+                    // Pie Chart (Medicines by Category)
+                    var pieCtx = document.getElementById('categoryChart').getContext('2d');
+                    new Chart(pieCtx, {
+                        type: 'pie',
+                        data: {
+                            labels: response.pie_chart.labels,
+                            datasets: [{
+                                label: 'Medicines by Category',
+                                data: response.pie_chart.data,
+                                backgroundColor: [
+                                    '#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1',
+                                    '#17a2b8', '#fd7e14', '#20c997', '#6610f2', '#e83e8c'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Dashboard data load error:", error);
+                }
+            });
+        });
+    </script>
+</html>
+
+{% endblock %}

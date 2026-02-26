@@ -1,0 +1,108 @@
+{% extends 'Administrator/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category</title>
+    <style>
+        /* Table Styling */
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #100a32; /* Same as sidebar/header color */
+            color: white;
+        }
+
+        td a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .text-danger {
+            color: red;
+        }
+
+        .text-primary {
+            color: blue;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <h3>Category Registration</h3>
+        <!-- <a href="{% url 'Admin:homepage' %}">Home Page</a><br><br> -->
+        <table>
+            <tr>
+                <td>Category name:</td>
+                <td>
+                    <input required type="text" name="txtcategory" value="{{ editcate.category_name }}"
+                           title="Name Allows Only Alphabets, Spaces and First Letter Must Be Capital Letter"
+                           pattern="^[A-Z]+[a-zA-Z ]*$">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit">
+                    <input type="reset" value="Cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <br><br>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in category %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.category_name }}</td>
+                <td><a href="{% url 'Admin:deletecategory' i.id %}" class="text-danger">🗑 Delete</a></td>
+                <td><a href="{% url 'Admin:editcategory' i.id %}" class="text-primary">✏ Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if msg %}
+    <script>
+        alert("{{ msg }}");
+        window.location = "{% url 'Admin:Category' %}";
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock %}

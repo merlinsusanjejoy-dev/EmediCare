@@ -1,0 +1,60 @@
+{% extends 'Administrator/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subcategory</title>
+</head>
+<body>
+    <form action="" method="POST">
+        {%csrf_token%}
+        <h3 align="center">Subcategory</h3>
+        <a href="{% url 'Admin:homepage' %}">Home Page</a><br>
+        <table border="1" align="center">
+            <tr>
+                <td>Categoy name:</td>
+                <td>
+                    <select name="cate" id="category">
+                        <option value="Category">Select Category</option>
+                        {% for i in  category %}
+                        <option {% if editscate.category.id == i.id %} 
+                        selected
+                        {%endif%} value="{{i.id}}">{{i.category_name}}</option>
+                        {%endfor%}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Subcategory name:</td>
+                <td><input type="text" name="txtsub" id="" value="{{editscate.subcategory_name}}"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Submit">
+                    <input type="submit" value="Cancel"></td>
+            </tr>
+        </table>
+    </form>
+    <table border="1" align="center">
+        <tr>
+            <th>#</th>
+            <th>Subcategory Name</th>
+            <th>Category Name</th>
+            <th>Action</th>
+        </tr>
+
+            {% for i in subcategory %}
+            <tr>
+            <td>{{forloop.counter}} </td>
+            <td>{{i.subcategory_name}}</td>
+            <td>{{i.category.category_name}}</td>
+            <td><a href="{% url 'Admin:deletesubcategory' i.id %}">Delete</a>
+            <a href="{% url 'Admin:editsubcategory' i.id %}">Edit</a></td>
+        </tr>
+        {%endfor%}
+</body>
+</html>
+{% endblock %}

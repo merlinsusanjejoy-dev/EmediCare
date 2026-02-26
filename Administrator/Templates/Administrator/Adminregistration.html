@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration</title>
+</head>
+<body>
+    <form action="" method="POST">
+        {%csrf_token%}
+        <h3 align="center">Admin Registration</h3>
+        <table border="1" align="center">
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" name="txtname" id="" value="{{editadm.admin_name}}"></td>
+            </tr>
+    
+            <tr>
+                <td>Email</td>
+                <td><input type="email" name="txtemail" id="" value="{{editadm.admin_email}}"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="text" name="txtpass" id=""value="{{editadm.admin_password}}"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Submit">
+                    <input type="submit" value="Cancel"></td>
+            </tr>
+        </table>
+    </form>
+
+
+    <br>
+    <br>
+
+
+    <table border="1" align="center">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+        
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+
+            {% for i in admin %}
+            <tr>
+            <td>{{forloop.counter}} </td>
+            <td>{{i.admin_name}}</td>
+        
+            <td>{{i.admin_email}}</td>
+            <td><a href="{% url 'Admin:deleteadmin' i.id %}">Delete</a>
+                <a href="{% url 'Admin:editadmin' i.id %}">Edit</a></td>
+        </tr>
+        {%endfor%}
+    </table>
+</body>
+</html>

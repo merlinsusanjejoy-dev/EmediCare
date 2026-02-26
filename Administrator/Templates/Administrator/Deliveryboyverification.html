@@ -1,0 +1,173 @@
+{% extends 'Administrator/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Boy Management</title>
+    <style>
+        /* Table Styling */
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #100a32;
+            color: white;
+        }
+
+        td a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .text-danger {
+            color: red;
+        }
+
+        .text-primary {
+            color: blue;
+        }
+
+        /* Center Form */
+        form {
+            text-align: center;
+        }
+
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="center">
+        <h2 align="Center">New Delivery Boys</h2>
+        <!-- <a href="{% url 'Admin:homepage' %}">Home Page</a> -->
+    </div>
+    <table>
+        <tr>
+            <th>SI.NO</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>District</th>
+            <th>Place</th>
+            <th>Photo</th>
+            <th>Proof</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        {% for i in deliveryboy %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.deliveryboy_name }}</td>
+            <td>{{ i.deliveryboy_email }}</td>
+            <td>{{ i.deliveryboy_contact }}</td>
+            <td>{{ i.deliveryboy_address }}</td>
+            <td>{{ i.place.district.district_name }}</td>
+            <td>{{ i.place.place_name }}</td>
+            <td><img src="{{ i.deliveryboy_photo.url }}" alt="No Image" width="50" height="50"></td>
+            <td>
+                {% if i.deliveryboy_proof %}
+                    <img src="{{ i.deliveryboy_proof.url }}" alt="No Proof" width="50" height="50">
+                {% else %}
+                    No Proof Uploaded
+                {% endif %}
+            </td>
+            <td><a href="{% url 'Admin:daccept' i.id %}">Accept</a></td>
+            <td><a href="{% url 'Admin:dreject' i.id %}">Reject</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <div class="center">
+        <h2 align="Center">Verified Delivery Boys</h2>
+    </div>
+    <table>
+        <tr>
+            <th>SI.NO</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>District</th>
+            <th>Place</th>
+            <th>Photo</th>
+            <th>Proof</th>
+            <th>Actions</th>
+        </tr>
+        {% for i in daccept %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.deliveryboy_name }}</td>
+            <td>{{ i.deliveryboy_email }}</td>
+            <td>{{ i.deliveryboy_contact }}</td>
+            <td>{{ i.deliveryboy_address }}</td>
+            <td>{{ i.place.district.district_name }}</td>
+            <td>{{ i.place.place_name }}</td>
+            <td><img src="{{ i.deliveryboy_photo.url }}" alt="No Image" width="50" height="50"></td>
+            <td>
+                {% if i.deliveryboy_proof %}
+                    <img src="{{ i.deliveryboy_proof.url }}" alt="No Proof" width="50" height="50">
+                {% else %}
+                    No Proof Uploaded
+                {% endif %}
+            </td>
+            <td><a href="{% url 'Admin:dreject' i.id %}">Reject</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <div class="center">
+        <h2 align="center">Rejected Delivery Boys</h2>
+    </div>
+    <table>
+        <tr>
+            <th>SI.NO</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>District</th>
+            <th>Place</th>
+            <th>Photo</th>
+            <th>Proof</th>
+        </tr>
+        {% for i in dreject %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.deliveryboy_name }}</td>
+            <td>{{ i.deliveryboy_email }}</td>
+            <td>{{ i.deliveryboy_contact }}</td>
+            <td>{{ i.deliveryboy_address }}</td>
+            <td>{{ i.place.district.district_name }}</td>
+            <td>{{ i.place.place_name }}</td>
+            <td><img src="{{ i.deliveryboy_photo.url }}" alt="No Image" width="50" height="50"></td>
+            <td>
+                {% if i.deliveryboy_proof %}
+                    <img src="{{ i.deliveryboy_proof.url }}" alt="No Proof" width="50" height="50">
+                {% else %}
+                    No Proof Uploaded
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock %}

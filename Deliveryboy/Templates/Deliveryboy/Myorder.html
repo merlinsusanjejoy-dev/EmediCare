@@ -1,0 +1,83 @@
+{% extends 'Deliveryboy/Header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #64bc4c;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+           
+        }
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <h3 align="center">My Orders</h3>
+   
+    <table border="1" align="center">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Rate</th>
+            <th>Address</th>
+            <!-- <th>Product Deatails</th> -->
+            <th>Status</th>
+        </tr>
+        {% for i in Booking %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.user.user_name }}</td>
+            <td>{{ i.booking_amount }}</td>
+            <td>{{ i.user.user_address }}</td>
+            <!-- <td><a href="{% url 'Deliveryboy:viewcart' i.id %}">View more</a></td> -->
+            <td>
+                {% if i.booking_status == 3 %}
+                <a href="{% url 'Deliveryboy:ordercollect' i.id %}" style="color: green;">Order Collected</a>
+                {% elif i.booking_status == 4 %}
+                <a href="{% url 'Deliveryboy:delivered' i.id %}" style="color: blue;">Order Delivered</a>
+                {% else %}
+                <span style="color: rgb(255, 0, 0);">Order Completed</span>
+                {% endif %}
+             </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock %}
